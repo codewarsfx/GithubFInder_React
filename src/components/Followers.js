@@ -1,9 +1,38 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { GithubContext } from '../context/context';
 import styled from 'styled-components';
 
 const Followers = () => {
-  return <h2>followers component</h2>;
+  const {followers}= useContext(GithubContext)
+  const strippedFollowers= followers.map(({login,avatar_url,html_url})=>{
+        const followerObj={
+          login,
+          img:avatar_url,
+          html_url
+        }
+        return followerObj
+  })
+
+  return (
+    <Wrapper>
+      <div className="followers">
+          {
+            strippedFollowers.map((follower,index)=>{
+              return(
+                <article key={index}>
+                  
+                  <img src={follower.img} alt='follower avatar'/>
+                  <div>
+                    <h4>{follower.login}</h4>
+                    <a href={follower.html_url}>{follower.html_url}</a>
+                  </div>
+                </article>
+              )
+            })
+          }
+          </div>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.article`
@@ -29,7 +58,7 @@ const Wrapper = styled.article`
     font-size: 1rem;
   }
   .followers {
-    overflow: scroll;
+    overflow-y: scroll;
     height: 260px;
     display: grid;
     grid-template-rows: repeat(auto-fill, minmax(45px, 1fr));

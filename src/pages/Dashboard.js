@@ -1,13 +1,33 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Info, Repos, User, Search, Navbar } from '../components';
 import loadingImage from '../images/preloader.gif';
 import { GithubContext } from '../context/context';
 const Dashboard = () => {
+  const {isloading}=useContext(GithubContext)
+
+
+  if(isloading){
+    return(
+      <main>
+        <Navbar/>
+        <Search/>
+        <img src={loadingImage} alt='loaderimage'  className="loading-img"/>
+      </main>
+    )
+  }
+ else{
   return (
     <main>
-      <h2>Dashboard Page</h2>
+        
+        <Navbar/>
+        <Search/>
+        <Info/>
+        <User/>
+        <Repos/>
+        
+       
     </main>
   );
-};
+}};
 
 export default Dashboard;

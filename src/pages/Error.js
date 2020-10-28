@@ -1,8 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom'
+
 const Error = () => {
-  return <h2>error page</h2>;
+  return(
+    <Wrapper>
+      <h1>
+        404
+      </h1>
+      <h3>
+        Sorry  page not found.Click to return back to home page
+      </h3>
+      <Link to='/' className='btn'>
+        Return
+      </Link>
+    </Wrapper>
+  );
 };
 const Wrapper = styled.section`
   min-height: 100vh;

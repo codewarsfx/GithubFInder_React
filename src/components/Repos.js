@@ -1,9 +1,66 @@
-import React from 'react';
+import { items } from 'fusioncharts';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { GithubContext } from '../context/context';
-import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from './Charts';
+import { Pie3D, Column3D, Bar3D, Doughnut2D } from './Charts';
 const Repos = () => {
-  return <h2>repos component</h2>;
+
+const data= useContext(GithubContext)
+const {repo}= data
+const newdata =repo.reduce((total,{language,stargazers_count})=>{
+
+if(!language)return total
+if(total[language]===undefined){
+  total[language]={
+    label:language,
+    value:0,
+    stars:stargazers_count
+  }
+}
+else{
+  total[language].value++
+  total[language].stars+=stargazers_count
+}
+return total
+},{})
+
+
+const mostUsed= Object.values(newdata).sort((a,b)=>{
+  return b.value-a.value
+}).slice(0,5)
+
+const mostStarred=Object.values(newdata).sort((a,b)=>{
+  return b.stars - a.stars
+}).map( (item )=>{
+  return { ...item,value:item.stars}
+}).slice(0,5)
+
+let {stars,forks}=repo.reduce((total,item)=>{
+  const {stargazers_count,name,forks}=item
+
+  total.stars[stargazers_count]={label:name,value:stargazers_count}
+   total.forks[forks]={label:name,value:forks}
+
+  return total
+},{
+  stars:{},
+  forks:{}
+})
+
+stars=Object.values(stars).slice(-5).reverse()
+forks=Object.values(stars).slice(-5).reverse()
+
+
+  return (
+    <section className="section">
+      <Wrapper className="section-center">
+        <Pie3D data={mostUsed}/>
+        <Column3D data={stars}/>
+         <Doughnut2D data={mostStarred}/>
+         <Bar3D data={forks}/>
+      </Wrapper>
+    </section>
+  )
 };
 
 const Wrapper = styled.div`
