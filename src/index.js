@@ -4,14 +4,21 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { GithubProvider } from './context/context';
-// import { Auth0Provider } from '@auth0/auth0-react';
+import { Auth0Provider } from '@auth0/auth0-react';
 
 ReactDOM.render(
+  // 
 
+  // 
   <React.StrictMode>
+    <Auth0Provider    domain="dev-s3mnuh-u.us.auth0.com"
+        clientId="nSPsOiynU9qdaj461IdjhkfWyfc56o7o"
+        redirectUri={window.location.origin}
+        cacheLocation='localstorage'>
       <GithubProvider>
           <App />
     </GithubProvider>
+    </Auth0Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

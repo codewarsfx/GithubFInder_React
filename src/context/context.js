@@ -71,12 +71,13 @@ const GithubProvider=({children})=>{
                } 
                setisLoading(false)
            })
-
             }
+
         else{
             setisLoading(false)
             toggleError("Github user doesn't exist",true)
         }
+        
         getRequestRemaining()
     }
 
